@@ -1,5 +1,6 @@
 package manke.automation.com.engine;
 
+import java.awt.AWTEvent;
 import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -8,10 +9,16 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.AWTEventListener;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+import javax.swing.JTextField;
+
 
 public class Operator {
 	
@@ -70,6 +77,17 @@ public class Operator {
 			r.keyRelease(keys[i]);
 		}
 	}
+	
+	public static void pasteString(String s) {
+		StringSelection stringSelection = new StringSelection(s);
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(stringSelection, stringSelection);
+		
+		r.keyPress(KeyEvent.VK_CONTROL);
+		r.keyPress(KeyEvent.VK_V);
+		r.keyRelease(KeyEvent.VK_V);
+		r.keyRelease(KeyEvent.VK_CONTROL);
+	}
 
 	public static Point getMousePos() {
 		Point p = MouseInfo.getPointerInfo().getLocation();
@@ -103,5 +121,46 @@ public class Operator {
 		}
 		return "";
 	}
+	
+	public static void getPositionOfNextClick(JTextField posxDest, JTextField posyDest) {
+		posxDestination = posxDest;
+		posyDestination = posyDest;	
+
+		Toolkit.getDefaultToolkit().addAWTEventListener(
+		          new ListenerOutsideClick(), AWTEvent.FOCUS_EVENT_MASK);
+//		Toolkit.getDefaultToolkit().addAWTEventListener(
+//		          new ListenerInsideClick(), AWTEvent.MOUSE_EVENT_MASK);
+		
+		count = 0;
+	}
+	
+	private static JTextField posxDestination;
+	private static JTextField posyDestination;
+	private static int count = 0;
+	
+	private static class ListenerOutsideClick implements AWTEventListener{
+		public void eventDispatched(AWTEvent event) {
+			if(posxDestination != null && posyDestination != null) {
+				posxDestination.setText("" + (int)(MouseInfo.getPointerInfo().getLocation().getX()));
+				posyDestination.setText("" + (int)(MouseInfo.getPointerInfo().getLocation().getY()));
+				posxDestination = null;
+				posyDestination = null;
+			}
+		}
+	}
+	
+	private boolean mouseClicked = false;
+	
+//	private static class ListenerInsideClick implements AWTEventListener{
+//		public void eventDispatched(AWTEvent event) {
+//			if(posxDestination != null && posyDestination != null && count == 10 && mouseClicked != (MouseEvent ) {
+//				posxDestination.setText("" + (int)(MouseInfo.getPointerInfo().getLocation().getX()));
+//				posyDestination.setText("" + (int)(MouseInfo.getPointerInfo().getLocation().getY()));
+//				posxDestination = null;
+//				posyDestination = null;
+//			}
+//			else count++;
+//		}
+//	}
 	
 }

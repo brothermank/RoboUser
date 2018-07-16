@@ -45,12 +45,12 @@ public class ClickCustomizer extends ActionCustomizer {
 	}
 	
 	private void recordClick() {
-		
+		Operator.getPositionOfNextClick(fposx, fposy);
 	}
 
 	@Override
 	public Action getAction() {
-		return new ClickAction(
+		return new ClickAction(o,
 				Integer.parseInt(fposx.getText()), 
 				Integer.parseInt(fposy.getText()), 
 				Integer.parseInt(fclickDuration.getText()));

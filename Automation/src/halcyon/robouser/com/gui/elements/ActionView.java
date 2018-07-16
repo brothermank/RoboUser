@@ -16,12 +16,14 @@ import halcyon.robouser.com.actionEngine.Action;
 // Contains GUI elements: Edit action, delete action, action description
 public class ActionView extends JPanel {
 	
+	RoutineView parentPanel;
 	JButton editAction, deleteAction;
 	JLabel actionDescription;
 	Action action;
 	
 	//AddActoinDialogue
-	public ActionView(Action a) {
+	public ActionView(Action a, RoutineView parentPanel) {
+		this.parentPanel = parentPanel;
 		this.action = a;
 		setLayout(new GridBagLayout());
 		
@@ -51,6 +53,9 @@ public class ActionView extends JPanel {
 	}
 	
 	private void deleteAction() {
-		
+		parentPanel.deleteActioNView(this);
+	}
+	public Action getAction() {
+		return action;
 	}
 }

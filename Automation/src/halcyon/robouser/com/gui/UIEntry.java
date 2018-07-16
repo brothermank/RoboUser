@@ -78,7 +78,7 @@ public class UIEntry {
 	}
 	
 	private void runRoutine() {
-		
+		routineView.executeActions();
 	}
 	
 }

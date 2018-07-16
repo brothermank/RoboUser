@@ -19,7 +19,7 @@ import halcyon.robouser.com.actionEngine.Action;
 public class RoutineView extends JPanel {
 	
 //	JList<ActionView> actionList;
-	ArrayList<ActionView> actionList;
+	ArrayList<Action> actionList;
 	JButton addAction;
 	Action action;
 	
@@ -30,7 +30,7 @@ public class RoutineView extends JPanel {
 		setLayout(new GridBagLayout());
 		
 		//Initialize components 
-		actionList = new ArrayList<ActionView>();
+		actionList = new ArrayList<Action>();
 		addAction = new JButton("Add Action");
 		listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
@@ -54,12 +54,24 @@ public class RoutineView extends JPanel {
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		
 		action = dialogue.getAction();
-		actionList.add(new ActionView(action));
-		listPanel.add(actionList.get(actionList.size() - 1));
+		actionList.add(action);
+		listPanel.add(new ActionView(action, this));
 		
 		validate();
 		repaint();
-		
 	}
 	
+	public void executeActions() {
+		for(int i = 0; i < actionList.size(); i++) {
+			actionList.get(i).execute();
+		}
+	}
+	
+	public void deleteActioNView(ActionView view) {
+		actionList.remove(view.getAction());
+		listPanel.remove(view);
+		
+		validate();
+		repaint();
+	}
 }

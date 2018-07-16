@@ -40,7 +40,7 @@ public class TypeCustomizer extends ActionCustomizer {
 
 	@Override
 	public Action getAction() {
-		return new TypeAction(
+		return new TypeAction(o,
 				finputToType.getText(), 
 				Integer.parseInt(ftypeBreakDuration.getText()), 
 				Integer.parseInt(fpressDuration.getText()));
