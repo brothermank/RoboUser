@@ -1,4 +1,4 @@
-package halcyon.robouser.com;
+package halcyon.robouser.com.gui;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -9,6 +9,9 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import halcyon.robouser.com.Utility;
+import halcyon.robouser.com.gui.elements.RoutineView;
 
 //Contains GUI elements: Run routine, save routine, create routine, new routine, routine view.
 public class UIEntry {
