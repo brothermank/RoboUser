@@ -19,12 +19,12 @@ import halcyon.robouser.com.actionEngine.Action;
 public class RoutineView extends JPanel {
 	
 //	JList<ActionView> actionList;
-	ArrayList<Action> actionList;
-	JButton addAction;
-	Action action;
+	private ArrayList<Action> actionList;
+	private JButton addAction;
+	private Action action;
 	
-	JScrollPane listView;
-	JPanel listPanel;
+	private JScrollPane listView;
+	private JPanel listPanel;
 	
 	public RoutineView() {
 		setLayout(new GridBagLayout());
@@ -70,6 +70,22 @@ public class RoutineView extends JPanel {
 	public void deleteActioNView(ActionView view) {
 		actionList.remove(view.getAction());
 		listPanel.remove(view);
+		
+		validate();
+		repaint();
+	}
+	
+	public ArrayList<Action> getActions(){
+		return actionList;
+	}
+	public void setActions(ArrayList<Action> actions) {
+		
+		listPanel.removeAll();
+		
+		this.actionList = actions;
+		for(int i = 0; i < actionList.size(); i++) {
+			listPanel.add(new ActionView(actionList.get(i), this));
+		}
 		
 		validate();
 		repaint();

@@ -63,7 +63,6 @@ public class Operator {
 		r.keyRelease(x);
 	}
 	public static void keyClick(int x, int time) { //Time in milliseconds
-		System.out.println("Clicking key: " + x);
 		r.keyPress(x);
 		wait(time);
 		r.keyRelease(x);
@@ -87,6 +86,67 @@ public class Operator {
 		r.keyPress(KeyEvent.VK_V);
 		r.keyRelease(KeyEvent.VK_V);
 		r.keyRelease(KeyEvent.VK_CONTROL);
+	}
+	
+	public static void typeString(String s, int pressTime, int delayTime) {
+		for(int i = 0; i < s.length(); i++) {
+			switch (s.charAt(i)) {
+			case '\\':
+				switch(s.charAt(i + 1)) {
+				case 'e':
+					keyClick(KeyEvent.VK_ENTER, pressTime);
+					i++;
+					break;
+				case 'a':
+					r.keyPress(KeyEvent.VK_CONTROL);
+					keyClick('A', pressTime);
+					r.keyRelease(KeyEvent.VK_CONTROL);
+					i++;
+					break;	
+				default:
+					altClick(KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD9, KeyEvent.VK_NUMPAD2);
+					break;
+				}
+				break;
+			case '/':
+				altClick(KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD4, KeyEvent.VK_NUMPAD7);
+				break;
+			default:
+				typeCharacter(s.charAt(i), pressTime);
+				break;
+			}
+			wait(delayTime);
+		}
+	}
+	public static void typeCharacter(char c, int pressTime) {
+        if (Character.isUpperCase(c)) {
+            r.keyPress(KeyEvent.VK_SHIFT);
+        }
+        r.keyPress(Character.toUpperCase(c));
+        wait(pressTime);
+        r.keyRelease(Character.toUpperCase(c));
+        if (Character.isUpperCase(c)) {
+            r.keyRelease(KeyEvent.VK_SHIFT);
+        }
+	}
+	public static void altClick(int event1, int event2, int event3, int event4){
+
+	        r.keyPress(KeyEvent.VK_ALT);
+
+	            r.keyPress(event1);
+	            r.keyRelease(event1);
+
+	            r.keyPress(event2);
+	            r.keyRelease(event2);
+
+	            r.keyPress(event3);
+	            r.keyRelease(event3);
+
+	            r.keyPress(event4);
+	            r.keyRelease(event4);
+
+	        r.keyRelease(KeyEvent.VK_ALT);
+
 	}
 
 	public static Point getMousePos() {

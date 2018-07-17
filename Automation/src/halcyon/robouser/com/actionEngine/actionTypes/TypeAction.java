@@ -1,15 +1,17 @@
 package halcyon.robouser.com.actionEngine.actionTypes;
 
+import java.io.Serializable;
+
 import halcyon.robouser.com.actionEngine.Action;
 import manke.automation.com.engine.Operator;
 
-public class TypeAction extends Action {
+public class TypeAction extends Action  implements Serializable {
 	
-	public int typeBreakDuration, pressDuration;
+	public int typeBreakDuration = 30, pressDuration = 30;
 	public String inputToType;
 	
 	public TypeAction(Operator o, String inputToType, int typeBreakDuration, int pressDuration) {
-		super(o);
+		super(o, AType.type);
 		this.inputToType = inputToType;
 		this.typeBreakDuration = typeBreakDuration;
 		this.pressDuration = pressDuration;
@@ -22,7 +24,11 @@ public class TypeAction extends Action {
 
 	@Override
 	public void execute() {
-		Operator.pasteString(inputToType);
+		if(typeBreakDuration <= 0 && pressDuration <= 0) {
+			Operator.pasteString(inputToType);
+			return;
+		}
+		Operator.typeString(inputToType, pressDuration, typeBreakDuration);
 		
 //		char[] chars = inputToType.toCharArray();
 //		for(int i = 0; i < chars.length; i++) {

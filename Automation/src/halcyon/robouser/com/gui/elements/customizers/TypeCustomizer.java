@@ -14,15 +14,15 @@ public class TypeCustomizer extends ActionCustomizer {
 	public JTextField finputToType, ftypeBreakDuration, fpressDuration;
 	public JLabel linputToType, ltypeBreakDuration, lpressDuration;
 	
-	public TypeCustomizer(Operator o) {
+	public TypeCustomizer(Operator o, TypeAction cust) {
 		super(o);
 		
 		setLayout(new GridLayout(0,2));
 		
 		//Instantiate components
-		finputToType = new JTextField("1");
-		ftypeBreakDuration= new JTextField("2");
-		fpressDuration = new JTextField("3");
+		finputToType = new JTextField("" + cust.inputToType);
+		ftypeBreakDuration= new JTextField("" + cust.typeBreakDuration);
+		fpressDuration = new JTextField("" + cust.pressDuration);
 		linputToType = new JLabel("Input");
 		ltypeBreakDuration = new JLabel("Time between characters (ms)");
 		lpressDuration = new JLabel("Button press time (ms)");

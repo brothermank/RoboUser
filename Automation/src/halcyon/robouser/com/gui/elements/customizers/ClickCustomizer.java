@@ -12,22 +12,26 @@ import manke.automation.com.engine.Operator;
 
 public class ClickCustomizer extends ActionCustomizer {
 
-	JTextField fposx, fposy, fclickDuration;
-	JLabel lposx, lposy, lclickDuration;
+	JTextField fposx, fposy, fclickDuration, frepeats, frepeatDelay;
+	JLabel lposx, lposy, lclickDuration, lrepeats, lrepeatDelay;
 	JButton recordClick;
 	
-	public ClickCustomizer(Operator o) {
+	public ClickCustomizer(Operator o, ClickAction cust) {
 		super(o);
 		setLayout(new GridLayout(0,2));
 		
 		
 		//Instantiate components
-		fposx = new JTextField("0");
-		fposy= new JTextField("0");
-		fclickDuration = new JTextField("50");
+		fposx = new JTextField("" + cust.posx);
+		fposy= new JTextField("" + cust.posy);
+		fclickDuration = new JTextField("" + cust.clickDuration);
+		frepeats= new JTextField("" + cust.repeats);
+		frepeatDelay= new JTextField("" + cust.repeatDelay);
 		lposx = new JLabel("Pos x");
 		lposy = new JLabel("Pos y");
-		lclickDuration = new JLabel("Click duration (ms)");
+		lclickDuration = new JLabel("Press duration");
+		lrepeats = new JLabel("Repeats");
+		lrepeatDelay = new JLabel("Time between clicks");
 		recordClick = new JButton("Record click");
 		
 		//Map buttons
@@ -40,6 +44,10 @@ public class ClickCustomizer extends ActionCustomizer {
 		add(lposy);
 		add(fclickDuration);
 		add(lclickDuration);
+		add(frepeats);
+		add(lrepeats);
+		add(frepeatDelay);
+		add(lrepeatDelay);
 		add(recordClick);
 		
 	}
@@ -53,6 +61,8 @@ public class ClickCustomizer extends ActionCustomizer {
 		return new ClickAction(o,
 				Integer.parseInt(fposx.getText()), 
 				Integer.parseInt(fposy.getText()), 
-				Integer.parseInt(fclickDuration.getText()));
+				Integer.parseInt(fclickDuration.getText()),
+				Integer.parseInt(frepeatDelay.getText()), 
+				Integer.parseInt(frepeats.getText()));
 	}
 }

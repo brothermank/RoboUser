@@ -1,16 +1,20 @@
 package halcyon.robouser.com.gui;
 
-import java.awt.Component;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import halcyon.robouser.com.Utility;
+import halcyon.robouser.com.actionEngine.Action;
 import halcyon.robouser.com.gui.elements.RoutineView;
 
 //Contains GUI elements: Run routine, save routine, create routine, new routine, routine view.
@@ -69,12 +73,42 @@ public class UIEntry {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void loadRoutine() {
-		
+	      try {
+	         FileInputStream fileIn = 
+	        		 new FileInputStream("routines/routine1.rou");
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         routineView.setActions((ArrayList<Action>) in.readObject());
+	         in.close();
+	         fileIn.close();
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	         return;
+	      } catch (ClassNotFoundException c) {
+	         System.out.println("Actions list not found");
+	         c.printStackTrace();
+	         return;
+	      }
+	      
 	}
 	
 	private void saveRoutine() {
-		
+		try {
+	         FileOutputStream fileOut =
+	        		 new FileOutputStream("routines/routine1.rou");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//	         ArrayList<Action> actions = routineView.getActions();
+//	         for(int i = 0; i < actions.size(); i++) {
+//	        	 out.writeObject(actions.get(i));
+//	         }
+	         out.writeObject(routineView.getActions());
+	         out.close();
+	         fileOut.close();
+	        
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	      }
 	}
 	
 	private void runRoutine() {
