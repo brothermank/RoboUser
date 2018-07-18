@@ -1,10 +1,13 @@
 package halcyon.robouser.com.gui.elements.customizers;
 
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import halcyon.robouser.com.Utility;
 import halcyon.robouser.com.actionEngine.Action;
 import halcyon.robouser.com.actionEngine.actionTypes.TypeAction;
 import manke.automation.com.engine.Operator;
@@ -16,8 +19,8 @@ public class TypeCustomizer extends ActionCustomizer {
 	
 	public TypeCustomizer(Operator o, TypeAction cust) {
 		super(o);
-		
-		setLayout(new GridLayout(0,2));
+
+		setLayout(new GridBagLayout());
 		
 		//Instantiate components
 		finputToType = new JTextField("" + cust.inputToType);
@@ -27,14 +30,19 @@ public class TypeCustomizer extends ActionCustomizer {
 		ltypeBreakDuration = new JLabel("Time between characters (ms)");
 		lpressDuration = new JLabel("Button press time (ms)");
 		
+		finputToType.setPreferredSize(new Dimension(100, 30));
+		ftypeBreakDuration.setPreferredSize(new Dimension(100, 30));
+		fpressDuration.setPreferredSize(new Dimension(100, 30));
+		
+		lpressDuration.setPreferredSize(new Dimension(200, 30));
+		
 		//Add components
-		add(finputToType);
-		add(linputToType);
-		add(ftypeBreakDuration);
-		add(linputToType);
-		add(ltypeBreakDuration);
-		add(fpressDuration);
-		add(lpressDuration);
+		Utility.addToPanelAt(this, finputToType, 1, 0);
+		Utility.addToPanelAt(this, linputToType, 0, 0);
+		Utility.addToPanelAt(this, ftypeBreakDuration, 1, 1);
+		Utility.addToPanelAt(this, ltypeBreakDuration, 0, 1);
+		Utility.addToPanelAt(this, fpressDuration, 1, 2);
+		Utility.addToPanelAt(this, lpressDuration, 0, 2);
 		
 	}
 

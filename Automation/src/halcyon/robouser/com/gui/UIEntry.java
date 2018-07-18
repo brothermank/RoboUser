@@ -2,6 +2,7 @@ package halcyon.robouser.com.gui;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 import halcyon.robouser.com.Utility;
 import halcyon.robouser.com.actionEngine.Action;
 import halcyon.robouser.com.gui.elements.RoutineView;
+import manke.automation.com.engine.GlobalKeyboardHook;
+import manke.automation.com.engine.GlobalKeyboardListener;
 
 //Contains GUI elements: Run routine, save routine, create routine, new routine, routine view.
 public class UIEntry {

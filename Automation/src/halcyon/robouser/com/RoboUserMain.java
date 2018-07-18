@@ -5,7 +5,7 @@ import java.awt.AWTException;
 import halcyon.robouser.com.gui.UIEntry;
 import manke.automation.com.engine.Operator;
 
-public class Main {
+public class RoboUserMain {
 
 	public static Operator o;
 	

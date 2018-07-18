@@ -14,7 +14,7 @@ public abstract class Action implements Serializable{
 		this.type = type;
 	}
 	
-	public enum AType {click, type, wait}
+	public enum AType {click, type, wait, move}
 	
 	public abstract String getDescription();
 	public abstract void execute();

@@ -42,6 +42,10 @@ public class Operator {
 		}
 	}
 	
+	public static void mouseMove(int x, int y) {
+		r.mouseMove(x, y);
+	}
+	
 	public static void mouseClick() {
 		r.mousePress(InputEvent.BUTTON1_MASK);
 		r.mouseRelease(InputEvent.BUTTON1_MASK);

@@ -1,11 +1,13 @@
 package halcyon.robouser.com.gui.elements.customizers;
 
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import halcyon.robouser.com.Utility;
 import halcyon.robouser.com.actionEngine.Action;
 import halcyon.robouser.com.actionEngine.actionTypes.ClickAction;
 import manke.automation.com.engine.Operator;
@@ -18,7 +20,7 @@ public class ClickCustomizer extends ActionCustomizer {
 	
 	public ClickCustomizer(Operator o, ClickAction cust) {
 		super(o);
-		setLayout(new GridLayout(0,2));
+		setLayout(new GridBagLayout());
 		
 		
 		//Instantiate components
@@ -34,21 +36,29 @@ public class ClickCustomizer extends ActionCustomizer {
 		lrepeatDelay = new JLabel("Time between clicks");
 		recordClick = new JButton("Record click");
 		
+		fposx.setPreferredSize(new Dimension(100, 30));
+		fposy.setPreferredSize(new Dimension(100, 30));
+		fclickDuration.setPreferredSize(new Dimension(100, 30));
+		frepeats.setPreferredSize(new Dimension(100, 30));
+		frepeatDelay.setPreferredSize(new Dimension(100, 30));
+		
+		lposy.setPreferredSize(new Dimension(200, 30));
+		
 		//Map buttons
 		recordClick.addActionListener(e -> {recordClick();});
 		
 		//Add components
-		add(fposx);
-		add(lposx);
-		add(fposy);
-		add(lposy);
-		add(fclickDuration);
-		add(lclickDuration);
-		add(frepeats);
-		add(lrepeats);
-		add(frepeatDelay);
-		add(lrepeatDelay);
-		add(recordClick);
+		Utility.addToPanelAt(this, fposx, 1, 0);
+		Utility.addToPanelAt(this, lposx, 0, 0);
+		Utility.addToPanelAt(this, fposy, 1, 1);
+		Utility.addToPanelAt(this, lposy, 0, 1);
+		Utility.addToPanelAt(this, fclickDuration, 1, 2);
+		Utility.addToPanelAt(this, lclickDuration, 0, 2);
+		Utility.addToPanelAt(this, frepeats, 1, 3);
+		Utility.addToPanelAt(this, lrepeats, 0, 3);
+		Utility.addToPanelAt(this, frepeatDelay, 1, 4);
+		Utility.addToPanelAt(this, lrepeatDelay, 0, 4);
+		Utility.addToPanelAt(this, recordClick, 0, 5);
 		
 	}
 	
