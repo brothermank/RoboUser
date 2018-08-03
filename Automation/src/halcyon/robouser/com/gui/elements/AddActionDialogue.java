@@ -22,6 +22,15 @@ public class AddActionDialogue extends JPanel {
 	JComboBox actionTypes;
 	
 	public AddActionDialogue() {
+		initialize();
+	}
+	
+	public AddActionDialogue(Action a) {
+		initialize();
+		changeActionType(a);
+	}
+	
+	private void initialize() {
 		setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(350, 500));
 		
@@ -39,13 +48,25 @@ public class AddActionDialogue extends JPanel {
 		//Add components
 		Utility.addToPanelAtWeighted(this, actionTypes, 0, 0, 1, 0);
 		Utility.addToPanelAt(this, customizer, 0, 1);
-		
 	}
 	
+	
 	private void changeActionType() {
+		changeActionType((AType) actionTypes.getSelectedItem());
+	}
+	private void changeActionType(Action.AType type) {
 		remove(customizer);
-		aType = (AType) actionTypes.getSelectedItem();
+		aType = type;
 		customizer = ActionCustomizer.getCustomizer(aType, RoboUserMain.o);
+		Utility.addToPanelAt(this, customizer, 0, 1);
+
+		validate();
+		repaint();
+	}
+	private void changeActionType(Action a) {
+		remove(customizer);
+		aType = a.type;
+		customizer = ActionCustomizer.getCustomizer(RoboUserMain.o, a);
 		Utility.addToPanelAt(this, customizer, 0, 1);
 
 		validate();

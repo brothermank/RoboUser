@@ -16,21 +16,22 @@ import halcyon.robouser.com.actionEngine.Action;
 // Contains GUI elements: Edit action, delete action, action description
 public class ActionView extends JPanel {
 	
-	RoutineView parentPanel;
+	RoutineCustomizer parentPanel;
 	JButton editAction, deleteAction;
 	JLabel actionDescription;
-	Action action;
+	private Action action;
 	
 	//AddActoinDialogue
-	public ActionView(Action a, RoutineView parentPanel) {
+	public ActionView(Action a, RoutineCustomizer parentPanel) {
 		this.parentPanel = parentPanel;
-		this.action = a;
 		setLayout(new GridBagLayout());
 		
 		//Initialize components 
 		editAction = new JButton("Edit Action");
 		deleteAction = new JButton("Delete Action");
-		actionDescription = new JLabel(action.getDescription());
+		actionDescription = new JLabel();
+		
+		setAction(a);
 		
 		//Add components
 		Utility.addToPanelAt(this, actionDescription, 0,0);
@@ -44,12 +45,15 @@ public class ActionView extends JPanel {
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBackground(Color.LIGHT_GRAY);
+		
 	}
 	
 	private void editAction() {
-		AddActionDialogue dialogue = new AddActionDialogue();
+		AddActionDialogue dialogue = new AddActionDialogue(action);
 		int result = JOptionPane.showConfirmDialog(null, dialogue, "Edit Action",
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		
+		parentPanel.editAction(this, dialogue.getAction());
 	}
 	
 	private void deleteAction() {
@@ -57,5 +61,9 @@ public class ActionView extends JPanel {
 	}
 	public Action getAction() {
 		return action;
+	}
+	public void setAction(Action action) {
+		this.action = action;
+		actionDescription.setText(action.getDescription());
 	}
 }
