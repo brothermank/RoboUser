@@ -1,6 +1,5 @@
 package halcyon.robouser.com.gui;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -21,6 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import halcyon.robouser.com.Utility;
 import halcyon.robouser.com.actionEngine.Action;
 import halcyon.robouser.com.actionEngine.Routine;
+import halcyon.robouser.com.actionEngine.SheetEditor;
 import halcyon.robouser.com.gui.elements.RoutineBoard;
 import halcyon.robouser.com.gui.elements.RoutineCustomizer;
 
@@ -64,6 +64,7 @@ public class UIEntry {
 		
 		//Add components to panels
 		Utility.addToPanelAt(buttonPanel, newRoutine, 0, 0);
+		Utility.addToPanelAt(buttonPanel, editPISheetFromText, 3, 0, GridBagConstraints.NORTHEAST);
 		Utility.addToPanelAt(mainPanel, buttonPanel, 0,0);
 		
 		root.add(mainPanel);
@@ -179,15 +180,17 @@ public class UIEntry {
 	
 	private void editPISheetFromText() {
 
-		File f = new File(System.getProperty("user.home") + "\\Work Folders\\Work\\My Documents\\AutoUser\\Routines");
+		File f = new File(System.getProperty("user.home") + "\\Work Folders\\Work\\My Documents\\AutoUser\\PI Sheets");
 		JFileChooser chooser = new JFileChooser(f);
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "Saved Routines", "rou");
+	        "Saved Routines", "pis");
 	    chooser.setFileFilter(filter);
 	    int returnVal = chooser.showOpenDialog(mainPanel);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
 	       System.out.println("You chose to open this file: " +
 	            chooser.getSelectedFile().getName());
+	       SheetEditor se = new SheetEditor(chooser.getSelectedFile());
+	       se.editPISheet();
 	    }
 	    
 	    

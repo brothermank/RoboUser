@@ -84,8 +84,11 @@ public class Operator {
 	public static void pasteString(String s) {
 		StringSelection stringSelection = new StringSelection(s);
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		try {
 		clipboard.setContents(stringSelection, stringSelection);
-		
+		} catch (IllegalStateException e){
+			System.out.println("Cannot set cliboard contents with String: " + s + " (String selection: " + stringSelection + ")");
+		}
 		r.keyPress(KeyEvent.VK_CONTROL);
 		r.keyPress(KeyEvent.VK_V);
 		r.keyRelease(KeyEvent.VK_V);
@@ -97,16 +100,36 @@ public class Operator {
 			switch (s.charAt(i)) {
 			case '\\':
 				switch(s.charAt(i + 1)) {
-				case 'e':
-					keyClick(KeyEvent.VK_ENTER, pressTime);
-					i++;
-					break;
 				case 'a':
 					r.keyPress(KeyEvent.VK_CONTROL);
 					keyClick('A', pressTime);
 					r.keyRelease(KeyEvent.VK_CONTROL);
 					i++;
-					break;	
+					break;
+				case 'c':
+					r.keyPress(KeyEvent.VK_CONTROL);
+					keyClick('C', pressTime);
+					r.keyRelease(KeyEvent.VK_CONTROL);
+					i++;
+					break;
+				case 'd':
+					keyClick(KeyEvent.VK_PAGE_DOWN, pressTime);
+					i++;
+					break;
+				case 'e':
+					keyClick(KeyEvent.VK_ENTER, pressTime);
+					i++;
+					break;
+				case 'u':
+					keyClick(KeyEvent.VK_PAGE_UP, pressTime);
+					i++;
+					break;
+				case 'v':
+					r.keyPress(KeyEvent.VK_CONTROL);
+					keyClick('V', pressTime);
+					r.keyRelease(KeyEvent.VK_CONTROL);
+					i++;
+					break;
 				default:
 					altClick(KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD9, KeyEvent.VK_NUMPAD2);
 					break;
