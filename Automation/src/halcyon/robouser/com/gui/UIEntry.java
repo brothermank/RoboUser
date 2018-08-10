@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -21,6 +22,7 @@ import halcyon.robouser.com.Utility;
 import halcyon.robouser.com.actionEngine.Action;
 import halcyon.robouser.com.actionEngine.Routine;
 import halcyon.robouser.com.actionEngine.SheetEditor;
+import halcyon.robouser.com.gui.elements.RangeSelectionDialogue;
 import halcyon.robouser.com.gui.elements.RoutineBoard;
 import halcyon.robouser.com.gui.elements.RoutineCustomizer;
 
@@ -30,7 +32,7 @@ public class UIEntry {
 	JFrame root;
 	JPanel mainPanel, buttonPanel;
 	
-	JButton runRoutine, loadRoutine, saveRoutine, newRoutine, saveRoutines, showRoutineBoard, editPISheetFromText;
+	JButton runRoutine, loadRoutine, saveRoutine, newRoutine, saveRoutines, showRoutineBoard, editPISheetFromText, enterPISheetFromFile, deleteRangeFromFile, deleteRange;
 	RoutineCustomizer routineCustomizer;
 	RoutineBoard routineBoard;
 	
@@ -61,10 +63,17 @@ public class UIEntry {
 		editPISheetFromText = new JButton("Edit PI Sheet from text");
 		routineCustomizer = new RoutineCustomizer();
 		routineBoard = new RoutineBoard();
+		enterPISheetFromFile = new JButton("Enter PI Sheet from file");
+		deleteRangeFromFile = new JButton("Delete Range From File");
+		deleteRange = new JButton("Select and Delete Range");
+		
 		
 		//Add components to panels
 		Utility.addToPanelAt(buttonPanel, newRoutine, 0, 0);
 		Utility.addToPanelAt(buttonPanel, editPISheetFromText, 3, 0, GridBagConstraints.NORTHEAST);
+		Utility.addToPanelAt(buttonPanel, enterPISheetFromFile, 3, 1, GridBagConstraints.NORTHEAST);
+		Utility.addToPanelAt(buttonPanel, deleteRangeFromFile, 3, 2, GridBagConstraints.NORTHEAST);
+		Utility.addToPanelAt(buttonPanel, deleteRange, 3, 3, GridBagConstraints.NORTHEAST);
 		Utility.addToPanelAt(mainPanel, buttonPanel, 0,0);
 		
 		root.add(mainPanel);
@@ -77,6 +86,9 @@ public class UIEntry {
 		showRoutineBoard.addActionListener(e -> {setMultiRoutineView();});
 		newRoutine.addActionListener(e -> {newRoutine();});
 		editPISheetFromText.addActionListener(e -> {editPISheetFromText();});
+		enterPISheetFromFile.addActionListener(e -> {enterPISheetFromText();});
+		deleteRangeFromFile.addActionListener(e -> {deletePISheetFromText();});
+		deleteRange.addActionListener(e -> {deletePISheetFromRange();});
 		
 		setSingleRoutineView();
 		
@@ -195,5 +207,49 @@ public class UIEntry {
 	    
 	    
 	}
+	private void enterPISheetFromText() {
+
+		File f = new File(System.getProperty("user.home") + "\\Work Folders\\Work\\My Documents\\AutoUser\\PI Sheets");
+		JFileChooser chooser = new JFileChooser(f);
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "Saved Routines", "pis");
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(mainPanel);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	       System.out.println("You chose to open this file: " +
+	            chooser.getSelectedFile().getName());
+	       SheetEditor se = new SheetEditor(chooser.getSelectedFile());
+	       se.enterFromFile();
+	    }
+	    
+	    
+	}
+	private void deletePISheetFromText() {
+
+		File f = new File(System.getProperty("user.home") + "\\Work Folders\\Work\\My Documents\\AutoUser\\PI Sheets");
+		JFileChooser chooser = new JFileChooser(f);
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "Saved Routines", "pis");
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(mainPanel);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	       System.out.println("You chose/ to open this file: " +
+	            chooser.getSelectedFile().getName());
+	       SheetEditor se = new SheetEditor(chooser.getSelectedFile());
+	       se.clearRangeFromFile();
+	    }
+	}
+	
+	private void deletePISheetFromRange() {
+		RangeSelectionDialogue dialogue = new RangeSelectionDialogue();
+		int result = JOptionPane.showConfirmDialog(null, dialogue, "Select Range",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		
+		SheetEditor se = new SheetEditor();
+	    se.clearRange(dialogue.getMin(), dialogue.getMax());
+	    
+	}
+	
+	
 	
 }
